@@ -1,7 +1,8 @@
+import WeatherApp from "./WeatherApp";
 
 function App() {
   return <div className='App'>
-    Weather App
+    <WeatherApp/>
   </div>;
 }
 
