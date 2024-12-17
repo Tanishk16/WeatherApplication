@@ -5,5 +5,4 @@ function App() {
     <WeatherApp/>
   </div>;
 }
-
 export default App;

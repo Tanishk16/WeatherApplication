@@ -3,12 +3,13 @@ import { useState } from "react"
 
 const WeatherApp = () =>{
     const[city, setCity] = useState("");
-    const[weather, setWeather] = useState(null);
+    // const[weather, setWeather] = useState(null);
+    const [forecast, setForecast] = useState([]);
 
     const fetchWeather = async () => {
         try{
-            const response = await axios.get(`http://localhost:8080/weather/parsed?city=${city}`);
-            setWeather(response.data);
+            const response = await axios.get(`http://localhost:8080/weather/full?city=${city}`);
+            setForecast(response.data);
         }
         catch(error){
             alert("City not found or server error.");
@@ -28,12 +29,16 @@ const WeatherApp = () =>{
             />
             <button onClick={fetchWeather}>Get Weather</button>
             {
-                weather && (
+                forecast.length > 0 && (
                     <div>
-                        <h2>Weather in (weather.city)</h2>
-                        <p>Description : (weather.description)</p>
-                        <p>Temperature : (weather.temperature) °C</p>
-                        <p>Humidity : (weather.humidity)%</p>
+                        <h2>Full day Weather forecasr for {city}</h2>
+                        <ul>
+                            {forecast.map((item, index) => (
+                                <li key={index}>
+                                    <strong>{item.dateTime}</strong>: {item.temperature}°C, {item.description}, Humidity: {item.humidity}%
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 ) 
             }
